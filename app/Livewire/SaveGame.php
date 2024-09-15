@@ -6,20 +6,19 @@ use Exception;
 use App\Models\Game;
 use Livewire\Component;
 use Illuminate\Support\Str;
-use Livewire\Attributes\Validate;
 use Illuminate\Support\Facades\Auth;
+
 
 class SaveGame extends Component
 {
     public $userId;
-    public string $type;
-    public string $submittedType = '';
+    public string $type = 'termo';
     private string $gameId = '';
     private string $attempts = '';
     private string $gameChart;
     private string $typeString;
     public string $errorMessage = '';
-    public bool $formDisabled = false;
+    // public bool $formDisabled = false;
     public array $disabledProps = [];
 
 
@@ -28,6 +27,23 @@ class SaveGame extends Component
     public function mount(): void
     {
         $this->userId = Auth::user()->id;
+        $this->fetchGamesPlayedToday();
+    }
+
+    private function fetchGamesPlayedToday()
+    {
+        $user = Auth::user();
+        if ($user->termo) {
+            $this->disabledProps[] = 'termo';
+        }
+
+        if ($user->dueto) {
+            $this->disabledProps[] = 'dueto';
+        }
+
+        if ($user->quarteto) {
+            $this->disabledProps[] = 'quarteto';
+        }
     }
 
     public function rules()
@@ -132,12 +148,11 @@ class SaveGame extends Component
     {
 
         $this->errorMessage = '';
-        $this->submittedType = $this->type;
-        $this->disabledProps[] = $this->submittedType;
 
         $this->validate();
         $this->setGameTypeFromString();
         $this->setGameId();
+
         if ($this->type == 'termo') {
 
             $this->setAttemptsString();
@@ -145,13 +160,33 @@ class SaveGame extends Component
         $this->setGameChart();
         if ($this->assertGameTypeIsValid() && $this->verifyStringIntegrity()) {
             $this->save();
-            $this->reset('dailyGame','gameChart');
-            $this->formDisabled = true;
+            $this->reset('dailyGame', 'gameChart');
+            $this->redirect(route('dashboard'));
+            // $this->formDisabled = true;
         }
+    }
+
+    private function saveGamesPlayedToday()
+    {
+        $user = Auth::user();
+        switch ($this->type) {
+            case 'termo':
+                $user->termo = 1;
+                break;
+            case 'dueto':
+                $user->dueto = 1;
+                break;
+            case 'quarteto':
+                $user->quarteto = 1;
+                break;
+        }
+
+        $user->save();
     }
 
     private function save(): void
     {
+        $this->saveGamesPlayedToday();
         $game = new Game();
 
         $game->gameId = $this->gameId;
