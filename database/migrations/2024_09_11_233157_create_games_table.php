@@ -20,6 +20,10 @@ return new class extends Migration
                 ->on('users')
                 ->onDelete('cascade');
 
+            $table->string('type', 8);
+
+            $table->string('words', 255);
+
             $table->string('daily_game', 255)->charset('utf8mb4')
                 ->collation('utf8mb4_unicode_ci');
 

@@ -8,5 +8,5 @@
         </div>
     </x-slot>
 
-    <livewire:termo-history />
+    <livewire:quarteto-history />
 </x-app-layout>
