@@ -154,6 +154,8 @@ class SaveGame extends Component
             $position = strpos($this->gameId, "\n");
             $result = substr($this->gameId, 0, $position);
             $this->gameId = $result;
+        } elseif ($this->type == 'dueto') {
+            $this->gameId = rtrim(Str::between($this->dailyGame, '#', '🔥'));
         }
     }
 
@@ -272,11 +274,11 @@ class SaveGame extends Component
             $game->words = $this->wordOfTheDay;
         }
 
-        if($this->type == 'dueto'){
+        if ($this->type == 'dueto') {
             $game->words = $this->parseWordsToJson($this->duetoWordsOfTheDay);
         }
 
-        if($this->type == 'quarteto'){
+        if ($this->type == 'quarteto') {
             $game->words = $this->parseWordsToJson($this->quartetoWordsOfTheDay);
         }
 

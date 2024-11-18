@@ -10,6 +10,7 @@ class TermoHistory extends Component
 {
 
     public $isExpanded = false;
+    public $expandedGameId = null;
     private $user;
     public $games;
 
@@ -18,19 +19,25 @@ class TermoHistory extends Component
         $this->fetchGames();
     }
 
-    public function toggle()
+    public function toggle2()
     {
         $this->isExpanded = !$this->isExpanded;
+    }
+
+    public function toggle($gameId)
+    {
+
+        $this->expandedGameId = $this->expandedGameId === $gameId ? null : $gameId;
+        $this->toggle2();
     }
 
     public function fetchGames()
     {
         $this->user = Auth::user()->id;
         $this->games = Game::where('user_id', $this->user)->where('type', 'termo')->get();
-        
     }
 
-    
+
 
 
     public function render()

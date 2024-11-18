@@ -31,10 +31,10 @@ new class extends Component
                 <!-- Navigation Links -->
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
                     <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')" wire:navigate>
-                        {{ __('Salvar game') }}
+                        {{ __('Salvar Jogos') }}
                     </x-nav-link>
                     <x-nav-link :href="route('game-history')" :active="request()->routeIs('game-history')" wire:navigate>
-                        {{ __('Game History') }}
+                        {{ __('Histórico') }}
                     </x-nav-link>
                 </div>
             </div>
