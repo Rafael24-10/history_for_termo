@@ -79,7 +79,7 @@ class SaveGame extends Component
 
     public function parseWordsToJson(array $words)
     {
-        return json_encode($words);
+        return json_encode($words, JSON_UNESCAPED_UNICODE);
     }
 
 
