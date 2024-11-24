@@ -12,6 +12,7 @@ class DuetoHistory extends Component
     public $expandedGameId = null;
     private $user;
     public $games;
+    public $search = '';
 
     public function mount()
     {
@@ -37,6 +38,28 @@ class DuetoHistory extends Component
         foreach ($this->games as $game) {
             json_decode($game->words);
         }
+    }
+
+    public function getFilteredGamesProperty()
+    {
+        if ($this->search) {
+
+            return $this->games->filter(
+                function ($game) {
+
+                    $wordsArray = json_decode($game->words, true);
+                    if (is_array($wordsArray)) {
+                        foreach ($wordsArray as $words) {
+                            if (str_contains(strtolower($words), strtolower($this->search))) {
+                                return true;
+                            };
+                        }
+                    }
+                    return false;
+                }
+
+            );
+        };
     }
 
 

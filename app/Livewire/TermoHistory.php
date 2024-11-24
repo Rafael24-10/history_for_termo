@@ -13,6 +13,7 @@ class TermoHistory extends Component
     public $expandedGameId = null;
     private $user;
     public $games;
+    public $search = '';
 
     public function mount()
     {
@@ -37,6 +38,21 @@ class TermoHistory extends Component
         $this->games = Game::where('user_id', $this->user)->where('type', 'termo')->get();
     }
 
+    public function getFilteredGamesProperty()
+    {
+        if ($this->search) {
+
+            return $this->games->filter(
+                function ($game) {
+
+                    return str_contains(strtolower($game->words), strtolower($this->search));
+                }
+
+            );
+        };
+    }
+
+    
 
 
 

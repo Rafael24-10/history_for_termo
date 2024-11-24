@@ -156,6 +156,8 @@ class SaveGame extends Component
             $this->gameId = $result;
         } elseif ($this->type == 'dueto') {
             $this->gameId = rtrim(Str::between($this->dailyGame, '#', '🔥'));
+        } elseif ($this->type == 'quarteto') {
+            $this->gameId = rtrim(Str::between($this->dailyGame, '#', '🔥'));
         }
     }
 
