@@ -1,0 +1,10 @@
+1- Permitir mais parâmetros de pesquisa como id, data e hora.
+2- Criar CRUD para jogos.
+3- Corrigir bugs de UI (histórico de jogos).
+4- Implementar caching dos jogos jogados.
+5- Criar estatísticas de jogos:
+	- Número total de jogos
+	- Número total de jogos por modo de jogo
+	- Número de jogos ganhos (total e por modo)
+	- Número de jogos perdidos (total e por modo)
+	
